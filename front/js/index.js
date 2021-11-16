@@ -1,9 +1,11 @@
 
+//Recupération des données depuis l'API
 fetch("http://localhost:3000/api/products")
  .then(response => response.json())
  .then(data => {
     console.log(data);
     let affichage = "";
+// Parcours de la réponse émise par l'API
     for(let produit of data) {
         affichage += `<a href="./product.html?id=${produit._id}">
                        <article>
@@ -13,6 +15,7 @@ fetch("http://localhost:3000/api/products")
                        </article>
                       </a>`;
     }
+//Affichage dynamique des produits 
  document.getElementById("items").innerHTML = affichage;
 })
  .catch(erreur => alert("Une erreur est survenue"));
