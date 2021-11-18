@@ -13,13 +13,21 @@ console.log(requeteId);
         console.log(data);
 //Ajout des détails dans la page produit
         function ajoutProduit() {
-          const image = document.querySelector(".item__img").innerHTML = `<img src="${data.imageUrl}" alt="${data.altTxt}">` ;
-          const titre =  document.getElementById('title').innerHTML = `<h1 id="title">${data.name}</h1>`;
-          const prix = document.getElementById('price').innerHTML = `<span id="price">${data.price}</span>`;
-          const description = document.getElementById('description').innerHTML = `<p id="description">${data.description}</p>`;
-          const couleur = document.getElementById('colors');
+          const image = document.querySelector(".item__img").innerHTML = `<img src="${data.imageUrl}" alt="${data.altTxt}">`;
+          const titre =  document.getElementById("title").innerHTML = `<h1 id="title">${data.name}</h1>`;
+          const prix = document.getElementById("price").innerHTML = `<span id="price">${data.price}</span>`;
+          const description = document.getElementById("description").innerHTML = `<p id="description">${data.description}</p>`; 
+          const couleurs = data.colors;
+//Boucle pour parcourir les differentes couleurs
+        function ajoutCouleurs() {
+          for(let couleur of couleurs) {
+            console.log(couleur);
+            document.getElementById("colors").innerHTML += `<option value="${couleur}">${couleur}</option>`;
+          }
         }
-        ajoutProduit();
-    });
-    
-  
+        ajoutCouleurs();
+        }   
+ajoutProduit();
+});        
+
+   

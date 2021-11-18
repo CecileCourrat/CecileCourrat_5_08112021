@@ -1,5 +1,6 @@
 
 //Recupération des données depuis l'API
+function requeteApi() {
 fetch("http://localhost:3000/api/products")
  .then(response => response.json())
  .then(data => {
@@ -19,6 +20,8 @@ fetch("http://localhost:3000/api/products")
  document.getElementById("items").innerHTML = affichage;
 })
  .catch(erreur => alert("Une erreur est survenue"));
+}
+requeteApi();
 
 
 
@@ -29,6 +32,4 @@ fetch("http://localhost:3000/api/products")
 
    
    
-
-
 
