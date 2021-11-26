@@ -6,7 +6,7 @@ fetch("http://localhost:3000/api/products")
  .then(data => {
     console.log(data);
     let affichage = "";
-// Parcours de la réponse émise par l'API
+//Parcours de la réponse émise par l'API
     for(let produit of data) {
         affichage += `<a href="./product.html?id=${produit._id}">
                        <article>
