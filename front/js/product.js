@@ -64,7 +64,7 @@ let produitsPanier = {
    }
 //Le produit commandé n'est pas deja présent dans le panier
    else {
-    ajoutProduitStorage.push(produitsPanier);
+   ajoutProduitStorage.push(produitsPanier);
    }
    localStorage.setItem("articles", JSON.stringify(ajoutProduitStorage));
  }
