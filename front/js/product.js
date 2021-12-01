@@ -61,10 +61,12 @@ let produitsPanier = {
 //Incrémentation de la quantité du meme produit dans le panier
    if(panierTrouvé) {
      panierTrouvé.quantité = parseInt(produitsPanier.quantité) + parseInt(panierTrouvé.quantité);
+     alert("votre article a été ajouté au panier");
    }
 //Le produit commandé n'est pas deja présent dans le panier
    else {
    ajoutProduitStorage.push(produitsPanier);
+   alert("votre article a été ajouté au panier");
    }
    localStorage.setItem("articles", JSON.stringify(ajoutProduitStorage));
  }
@@ -73,6 +75,7 @@ let produitsPanier = {
  else {
    ajoutProduitStorage = [];
    ajoutProduitStorage.push(produitsPanier);
+   alert("votre article a été ajouté au panier");
    localStorage.setItem("articles", JSON.stringify(ajoutProduitStorage));
  }
 
