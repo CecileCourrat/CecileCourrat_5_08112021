@@ -84,6 +84,10 @@ h2 {
 	text-align: end;
 	font-size: 22px;
 }
+#cart__delete:hover {
+	cursor: pointer;
+	font-weight: 700;
+}
 
 /*******/
 /*Order*/

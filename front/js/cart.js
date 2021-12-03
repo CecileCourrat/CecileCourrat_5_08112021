@@ -11,8 +11,8 @@ if(ajoutProduitStorage === null){
 alert("le panier est vide");
 }
 //Boucle pour parcourir les élements dans le local storage
-else{
-    for(let i = 0; i < ajoutProduitStorage.length;i++){
+else {
+    for(let i = 0; i < ajoutProduitStorage.length; i++){
        let prixArticle = 
        ajoutProduitStorage[i].prix *
        ajoutProduitStorage[i].quantité;
@@ -33,7 +33,7 @@ else{
                       <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${ajoutProduitStorage[i].quantité}">
                     </div>
                     <div class="cart__item__content__settings__delete">
-                      <p class="deleteItem">Supprimer</p>
+                     <p class="deleteItem">Supprimer</p>
                     </div>
                   </div>
                 </div>
@@ -46,21 +46,49 @@ else{
 function totalPanier() {
 //Total des articles 
   let articleQuantite = document.getElementsByClassName("itemQuantity");
-  let length = articleQuantite.length,
-  articleTotal = 0;
+  let length = articleQuantite.length;
+  let articleTotal = 0;
 
-  for(let j = 0; j < length; ++j) {
-    articleTotal +=articleQuantite[j].valueAsNumber;
+  for(let i = 0; i < length; i++) {
+    articleTotal +=articleQuantite[i].valueAsNumber;
   }
   let articleTotalQuantite = document.getElementById("totalQuantity");
   articleTotalQuantite.innerHTML = articleTotal;
 //Total des prix
-  prixTotal = 0;
+  let prixTotal = 0;
 
-  for(let j = 0; j < length; ++j) {
-    prixTotal += articleQuantite[j].valueAsNumber * ajoutProduitStorage[j].prix;
+  for(let i = 0; i < length; i++) {
+    prixTotal += articleQuantite[i].valueAsNumber * ajoutProduitStorage[i].prix;
   }
   let prixTotalArticles = document.getElementById("totalPrice");
   prixTotalArticles.innerHTML = prixTotal;
 }
 totalPanier();
+
+//Fonction pour supprimer un produit
+function supprimerProduit() {
+  const suppressionArticle = document.querySelectorAll(".deleteItem");
+  for (let i = 0; i < suppressionArticle.length; i++) {
+    suppressionArticle[i].addEventListener("click", (event) => {
+      event.preventDefault();
+      ajoutProduitStorage.splice(i, 1);
+      localStorage.setItem("articles", JSON.stringify(ajoutProduitStorage));
+      alert("votre produit a été supprimé");
+      location.reload();
+    });
+  }
+}
+supprimerProduit();
+
+//Fonction pour vider entierement le panier
+function supprimerPanier() {
+ const viderPanier = document.getElementById("cart__delete");
+ viderPanier.addEventListener("click", (event) => {
+  event.preventDefault();
+  localStorage.clear();
+  alert("Le panier a été supprimé");
+  location.href = "index.html";
+});
+}
+supprimerPanier();
+
