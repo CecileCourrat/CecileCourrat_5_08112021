@@ -39,6 +39,7 @@ event.preventDefault();
 const quantite = document.getElementById("quantity").value;
 const choixCouleur = document.getElementById("colors").value;
 const image = document.getElementById("image").src;
+//const image = document.getElementById("image").alt;
 const titre = document.getElementById("title").textContent;
 const prix = document.getElementById("price").textContent;
 

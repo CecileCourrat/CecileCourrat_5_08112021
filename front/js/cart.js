@@ -92,3 +92,28 @@ function supprimerPanier() {
 }
 supprimerPanier();
 
+//Fonction pour changer la quantité d'un article
+function changerQuantite() {
+  let selectionQuantite = document.querySelectorAll(".itemQuantity");
+    for(let i = 0; i < selectionQuantite.length; i ++) {
+      selectionQuantite[i].addEventListener("change", (event) => {
+        event.preventDefault();
+        let articleQuantite = event.target.value;
+        let nouveauPanier = {
+          id: ajoutProduitStorage[i].id,
+          quantité: articleQuantite,
+          couleur: ajoutProduitStorage[i].couleur,
+          img: ajoutProduitStorage[i].img,
+          alt: ajoutProduitStorage[i].alt,
+          nom: ajoutProduitStorage[i].nom,
+          prix: ajoutProduitStorage[i].prix
+        };
+        ajoutProduitStorage[i] = nouveauPanier;
+        localStorage.clear();
+        localStorage.setItem("articles", JSON.stringify(ajoutProduitStorage));
+        location.reload();
+      }); 
+  }
+}
+changerQuantite();
+
