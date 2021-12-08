@@ -117,3 +117,109 @@ function changerQuantite() {
 }
 changerQuantite();
 
+//*************Formulaire***********************
+
+let formulaire = document.querySelector(".cart__order__form");
+ 
+//Vérification des données saisies par l'utilisateur
+
+function prenom () {
+formulaire.firstName.addEventListener("input", function () {
+  prenomValide(this);
+});
+
+const prenomValide = function (inputPrenom) {
+  let prenomRegex = new RegExp("^[-'a-zA-ZÀ-ÖØ-öø-ÿ\s]{2,}$", "g");
+  let testPrenom = prenomRegex.test(inputPrenom.value);
+  if(testPrenom) {
+    inputPrenom.nextElementSibling.innerHTML = "";
+    return true;
+  }
+  else {
+    inputPrenom.nextElementSibling.innerHTML = "Prénom non valide";
+    return false;
+  }
+}
+};
+prenom();
+
+
+function nom () {
+  formulaire.lastName.addEventListener("input", function () {
+    nomValide(this);
+  });
+  
+  const nomValide = function (inputNom) {
+    let nomRegex = new RegExp("^[-'a-zA-ZÀ-ÖØ-öø-ÿ\s_ ]{2,}$", "g");
+    let testNom = nomRegex.test(inputNom.value);
+    if(testNom) {
+      inputNom.nextElementSibling.innerHTML = "";
+      return true;
+    }
+    else {
+      inputNom.nextElementSibling.innerHTML = "Nom non valide";
+      return false;
+    }
+  }
+  };
+nom();
+
+function adresse () {
+    formulaire.address.addEventListener("input", function () {
+      adresseValide(this);
+    });
+    
+    const adresseValide = function (inputAdresse) {
+      let adresseRegex = new RegExp("^[-'a-zA-Z0-9À-ÖØ-öø-ÿ\s_ ]{3,}$", "g");
+      let testAdresse = adresseRegex.test(inputAdresse.value);
+      if(testAdresse) {
+        inputAdresse.nextElementSibling.innerHTML = "";
+        return true;
+      }
+      else {
+        inputAdresse.nextElementSibling.innerHTML = "Adresse non valide";
+        return false;
+      }
+    }
+    };
+adresse();
+
+function ville () {
+  formulaire.city.addEventListener("input", function () {
+    villeValide(this);
+  });
+  
+  const villeValide = function (inputVille) {
+    let villeRegex = new RegExp("^[-'a-zA-ZÀ-ÖØ-öø-ÿ\s_ ]{3,}$", "g");
+    let testVille = villeRegex.test(inputVille.value);
+    if(testVille) {
+      inputVille.nextElementSibling.innerHTML = "";
+      return true;
+    }
+    else {
+      inputVille.nextElementSibling.innerHTML = "Ville non valide";
+      return false;
+    }
+  }
+  };
+ville();
+
+function email () {
+  formulaire.email.addEventListener("input", function() {
+    emailValide(this);
+ });
+
+ const emailValide = function (inputEmail) {
+    let emailRegex = new RegExp("^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$", "g" );
+    let testEmail = emailRegex.test(inputEmail.value);
+  if(testEmail) {
+    inputEmail.nextElementSibling.innerHTML ="";
+    return true;
+  }
+  else {
+    inputEmail.nextElementSibling.innerHTML = "Adresse email non valide";
+   }
+ };
+}
+email();
+
