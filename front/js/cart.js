@@ -123,7 +123,6 @@ let formulaire = document.querySelector(".cart__order__form");
  
 //Vérification des données saisies par l'utilisateur
 
-function prenom () {
 formulaire.firstName.addEventListener("input", function () {
   prenomValide(this);
 });
@@ -139,12 +138,9 @@ const prenomValide = function (inputPrenom) {
     inputPrenom.nextElementSibling.innerHTML = "Prénom non valide";
     return false;
   }
-}
  };
-  prenom();
+  
 
-
-function nom () {
   formulaire.lastName.addEventListener("input", function () {
     nomValide(this);
   });
@@ -160,11 +156,9 @@ function nom () {
       inputNom.nextElementSibling.innerHTML = "Nom non valide";
       return false;
     }
-  }
    };
-  nom();
+ 
 
-function adresse () {
     formulaire.address.addEventListener("input", function () {
       adresseValide(this);
     });
@@ -180,11 +174,9 @@ function adresse () {
         inputAdresse.nextElementSibling.innerHTML = "Adresse non valide";
         return false;
       }
-    }
    };
-  adresse();
+ 
 
-function ville () {
   formulaire.city.addEventListener("input", function () {
     villeValide(this);
   });
@@ -200,11 +192,9 @@ function ville () {
       inputVille.nextElementSibling.innerHTML = "Ville non valide";
       return false;
     }
-  }
    };
-  ville();
 
-function email () {
+
   formulaire.email.addEventListener("input", function() {
     emailValide(this);
  });
@@ -219,39 +209,21 @@ function email () {
   else {
     inputEmail.nextElementSibling.innerHTML = "Adresse email non valide";
    }
- }
  };
-  email();
-
-//  function formulaireValide () {
-//    if(
-//      prenom() &&
-//      nom() &&
-//      adresse() &&
-//      ville() &&
-//      email()
-//    ) {
-//      return true;
-//    } else {
-//      alert("Le formulaire comporte des erreurs");
-//      return false;
-//    }
-//  }
-//  formulaireValide();
-
+ 
 
 function validerCommande () {
    const boutonCommande = document.getElementById("order");
     boutonCommande.addEventListener("click", (event) => {
       event.preventDefault();
-      //  if(formulaireValide) {
-      // prenom() &&
-      // nom() &&
-      // adresse() &&
-      // ville() &&
-      // email() 
-      // ) {
-
+      if(
+        prenomValide(formulaire.firstName) &&
+        nomValide(formulaire.lastName) &&
+        adresseValide(formulaire.address) &&
+        villeValide(formulaire.city) &&
+        emailValide(formulaire.email)
+      ) {
+     
       const produits = [];
         for(let i = 0; i < ajoutProduitStorage.length; i++) {
           produits.push(ajoutProduitStorage[i].id);
@@ -267,9 +239,7 @@ function validerCommande () {
        },
            products: produits
       };
-      console.log(objetContact);
-    
-      
+             
       const post = {
            method: "POST",
            body: JSON.stringify(objetContact),
@@ -278,7 +248,6 @@ function validerCommande () {
            },
       };
     
-        // if(prenom() && nom() && adresse() && ville() && email()) {
  fetch("http://localhost:3000/api/products/order", post) 
   .then(response => response.json())
   .then(data => {
@@ -286,17 +255,12 @@ function validerCommande () {
     localStorage.setItem("orderId", data.orderId);
     document.location.href = "./confirmation.html?id=" + data.orderId;
   
-})
-       
+})     
 .catch(erreur => alert("Une erreur est survenue"));
   
-
-// else {
-//   alert("Le formulaire comporte des erreurs");
-//  }
-// }
-
+  } else {
+   alert("Le formulaire comporte des erreurs");
+ }
 });
 }
-
 validerCommande();
