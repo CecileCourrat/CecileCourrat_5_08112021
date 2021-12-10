@@ -140,8 +140,8 @@ const prenomValide = function (inputPrenom) {
     return false;
   }
 }
-};
-prenom();
+ };
+  prenom();
 
 
 function nom () {
@@ -161,8 +161,8 @@ function nom () {
       return false;
     }
   }
-  };
-nom();
+   };
+  nom();
 
 function adresse () {
     formulaire.address.addEventListener("input", function () {
@@ -181,8 +181,8 @@ function adresse () {
         return false;
       }
     }
-    };
-adresse();
+   };
+  adresse();
 
 function ville () {
   formulaire.city.addEventListener("input", function () {
@@ -201,8 +201,8 @@ function ville () {
       return false;
     }
   }
-  };
-ville();
+   };
+  ville();
 
 function email () {
   formulaire.email.addEventListener("input", function() {
@@ -219,7 +219,84 @@ function email () {
   else {
     inputEmail.nextElementSibling.innerHTML = "Adresse email non valide";
    }
+ }
  };
-}
-email();
+  email();
 
+//  function formulaireValide () {
+//    if(
+//      prenom() &&
+//      nom() &&
+//      adresse() &&
+//      ville() &&
+//      email()
+//    ) {
+//      return true;
+//    } else {
+//      alert("Le formulaire comporte des erreurs");
+//      return false;
+//    }
+//  }
+//  formulaireValide();
+
+
+function validerCommande () {
+   const boutonCommande = document.getElementById("order");
+    boutonCommande.addEventListener("click", (event) => {
+      event.preventDefault();
+      //  if(formulaireValide) {
+      // prenom() &&
+      // nom() &&
+      // adresse() &&
+      // ville() &&
+      // email() 
+      // ) {
+
+      const produits = [];
+        for(let i = 0; i < ajoutProduitStorage.length; i++) {
+          produits.push(ajoutProduitStorage[i].id);
+      }
+      
+      const objetContact = {
+          contact: {
+           firstName :formulaire.firstName.value,
+           lastName :formulaire.lastName.value,
+           address :formulaire.address.value,
+           city :formulaire.city.value,
+           email :formulaire.email.value
+       },
+           products: produits
+      };
+      console.log(objetContact);
+    
+      
+      const post = {
+           method: "POST",
+           body: JSON.stringify(objetContact),
+           headers : {
+             "Content-Type": "application/json"
+           },
+      };
+    
+        // if(prenom() && nom() && adresse() && ville() && email()) {
+ fetch("http://localhost:3000/api/products/order", post) 
+  .then(response => response.json())
+  .then(data => {
+    localStorage.clear();
+    localStorage.setItem("orderId", data.orderId);
+    document.location.href = "./confirmation.html?id=" + data.orderId;
+  
+})
+       
+.catch(erreur => alert("Une erreur est survenue"));
+  
+
+// else {
+//   alert("Le formulaire comporte des erreurs");
+//  }
+// }
+
+});
+}
+
+validerCommande();
