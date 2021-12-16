@@ -5,7 +5,6 @@ function commandeFinale () {
   
   const numeroCommande = document.getElementById("orderId");
   numeroCommande.innerText = localStorage.getItem("orderId");
-  console.log(localStorage.getItem("orderId"));
   localStorage.clear();
 }
 commandeFinale();

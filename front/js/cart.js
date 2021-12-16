@@ -1,47 +1,45 @@
 
 //Récupération du local storage
 let ajoutProduitStorage = JSON.parse(localStorage.getItem("articles"));
+const affichagePanier = document.querySelector("#cart__items");
 
-//Affichage des produits dans le panier
-const affichagePanier = document.getElementById("cart__items");
-console.log(affichagePanier);
-
-//le panier est vide
-if(ajoutProduitStorage === null){
-alert("le panier est vide");
+function affichageProduits() {
+//Si le panier est vide
+ if(ajoutProduitStorage === null || ajoutProduitStorage == 0) {
+  const panierVide = `<p> Le panier est vide </p>`;
+   affichagePanier.innerHTML = panierVide;
 }
 //Boucle pour parcourir les élements dans le local storage
 else {
-    for(let i = 0; i < ajoutProduitStorage.length; i++){
-       let prixArticle = 
-       ajoutProduitStorage[i].prix *
-       ajoutProduitStorage[i].quantité;
-       let affichageProduits = `
-        <article class="cart__item" data-id="${ajoutProduitStorage[i].id}">
-                <div class="cart__item__img">
-                  <img src="${ajoutProduitStorage[i].img}" alt="${ajoutProduitStorage[i].altTxt}">
+    for(let i = 0; i < ajoutProduitStorage.length; i++) {
+       let prixArticle = ajoutProduitStorage[i].prix * ajoutProduitStorage[i].quantité;
+       let affichageProduit = 
+       `<article class="cart__item" data-id="${ajoutProduitStorage[i].id}">
+            <div class="cart__item__img">
+              <img src="${ajoutProduitStorage[i].img}" alt="${ajoutProduitStorage[i].altTxt}">
+              </div>
+              <div class="cart__item__content">
+                <div class="cart__item__content__titlePrice">
+                  <h2>${ajoutProduitStorage[i].nom}</h2>
+                  <p>${ajoutProduitStorage[i].couleur}</p>
+                  <p>${prixArticle}€</p>
                 </div>
-                <div class="cart__item__content">
-                  <div class="cart__item__content__titlePrice">
-                    <h2>${ajoutProduitStorage[i].nom}</h2>
-                    <p>${ajoutProduitStorage[i].couleur}</p>
-                    <p>${prixArticle}€</p>
+                <div class="cart__item__content__settings">
+                  <div class="cart__item__content__settings__quantity">
+                    <p>Qté : </p>
+                    <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${ajoutProduitStorage[i].quantité}">
                   </div>
-                  <div class="cart__item__content__settings">
-                    <div class="cart__item__content__settings__quantity">
-                      <p>Qté : </p>
-                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${ajoutProduitStorage[i].quantité}">
-                    </div>
-                    <div class="cart__item__content__settings__delete">
-                     <p class="deleteItem">Supprimer</p>
-                    </div>
+                  <div class="cart__item__content__settings__delete">
+                    <p class="deleteItem">Supprimer</p>
                   </div>
                 </div>
-              </article>
-        `;
-       document.getElementById("cart__items").innerHTML += affichageProduits;
+               </div>
+          </article> `;
+       document.getElementById("cart__items").innerHTML += affichageProduit;
     }
+  }
 }
+affichageProduits();
 
 function totalPanier() {
 //Total des articles 
@@ -50,10 +48,11 @@ function totalPanier() {
   let articleTotal = 0;
 
   for(let i = 0; i < length; i++) {
-    articleTotal +=articleQuantite[i].valueAsNumber;
+    articleTotal += articleQuantite[i].valueAsNumber;
   }
   let articleTotalQuantite = document.getElementById("totalQuantity");
   articleTotalQuantite.innerHTML = articleTotal;
+
 //Total des prix
   let prixTotal = 0;
 
@@ -73,7 +72,7 @@ function supprimerProduit() {
       event.preventDefault();
       ajoutProduitStorage.splice(i, 1);
       localStorage.setItem("articles", JSON.stringify(ajoutProduitStorage));
-      alert("votre produit a été supprimé");
+      alert("Votre produit a été supprimé");
       location.reload();
     });
   }
@@ -88,7 +87,7 @@ function supprimerPanier() {
   localStorage.clear();
   alert("Le panier a été supprimé");
   location.href = "index.html";
-});
+ });
 }
 supprimerPanier();
 
@@ -112,7 +111,7 @@ function changerQuantite() {
         localStorage.clear();
         localStorage.setItem("articles", JSON.stringify(ajoutProduitStorage));
         location.reload();
-      }); 
+    }); 
   }
 }
 changerQuantite();

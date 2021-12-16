@@ -25,21 +25,19 @@ console.log(requeteId);
           }
         }
         ajoutCouleurs();
-        }   
+      }   
 ajoutProduit();
 });   
-
 
 //Ecoute de l'evenement au clic du bouton
 const ajoutPanier = document.getElementById("addToCart");
 ajoutPanier.addEventListener("click", (event)=> {
-event.preventDefault();
+ event.preventDefault();
 
 //Création d'un objet à ajouter au panier
 const quantite = document.getElementById("quantity").value;
 const choixCouleur = document.getElementById("colors").value;
 const image = document.getElementById("image").src;
-//const image = document.getElementById("image").alt;
 const titre = document.getElementById("title").textContent;
 const prix = document.getElementById("price").textContent;
 
@@ -53,33 +51,36 @@ let produitsPanier = {
 };
 
 //Local storage
-// conversion des données au format JSON en objet Javascript
+//Initialisation du local storage
  let ajoutProduitStorage = JSON.parse(localStorage.getItem("articles"));
 
+//Fenetre de confirmation
+let fenetreConfirmation = () => {
+  if(window.confirm("Votre article a été ajouté au panier, pour consulter votre panier cliquer sur OK")) {
+    window.location.href ="cart.html";
+  }
+}
 //Il y a des articles dans le panier
  if(ajoutProduitStorage) {
    let panierTrouvé = ajoutProduitStorage.find((article) => article.id === requeteId && article.couleur === choixCouleur);
 //Incrémentation de la quantité du meme produit dans le panier
    if(panierTrouvé) {
      panierTrouvé.quantité = parseInt(produitsPanier.quantité) + parseInt(panierTrouvé.quantité);
-     alert("votre article a été ajouté au panier");
    }
 //Le produit commandé n'est pas deja présent dans le panier
    else {
    ajoutProduitStorage.push(produitsPanier);
-   alert("votre article a été ajouté au panier");
    }
    localStorage.setItem("articles", JSON.stringify(ajoutProduitStorage));
- }
-  
+   fenetreConfirmation();
+ } 
  //le panier est vide
  else {
    ajoutProduitStorage = [];
    ajoutProduitStorage.push(produitsPanier);
-   alert("votre article a été ajouté au panier");
    localStorage.setItem("articles", JSON.stringify(ajoutProduitStorage));
+   fenetreConfirmation();
  }
-
 });
   
 

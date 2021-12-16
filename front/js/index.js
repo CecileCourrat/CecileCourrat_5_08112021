@@ -1,9 +1,9 @@
 
-//Recupération des données depuis l'API
+//Recupération des données de l'API
 function requeteApi() {
-fetch("http://localhost:3000/api/products")
- .then(response => response.json())
- .then(data => {
+ fetch("http://localhost:3000/api/products")
+  .then(response => response.json())
+  .then(data => {
     console.log(data);
     let affichage = "";
 //Parcours de la réponse émise par l'API
@@ -17,8 +17,8 @@ fetch("http://localhost:3000/api/products")
                       </a>`;
     }
 //Affichage dynamique des produits 
- document.getElementById("items").innerHTML = affichage;
-})
+   document.getElementById("items").innerHTML = affichage;
+  })
  .catch(erreur => alert("Une erreur est survenue"));
 }
 requeteApi();
