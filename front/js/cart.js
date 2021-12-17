@@ -122,16 +122,19 @@ let formulaire = document.querySelector(".cart__order__form");
  
 //Vérification des données saisies par l'utilisateur
 
+//Ecoute de la modification du prénom
 formulaire.firstName.addEventListener("input", function () {
   prenomValide(this);
 });
 
 const prenomValide = function (inputPrenom) {
+//Création de la regex pour valider le prénom
   let prenomRegex = new RegExp("^[-'a-zA-ZÀ-ÖØ-öø-ÿ\s]{2,}$", "g");
+//Test de la regex prénom
   let testPrenom = prenomRegex.test(inputPrenom.value);
-  if(testPrenom) {
-    inputPrenom.nextElementSibling.innerHTML = "";
-    return true;
+   if(testPrenom) {
+     inputPrenom.nextElementSibling.innerHTML = "";
+     return true;
   }
   else {
     inputPrenom.nextElementSibling.innerHTML = "Prénom non valide";
@@ -139,15 +142,15 @@ const prenomValide = function (inputPrenom) {
   }
  };
   
-
-  formulaire.lastName.addEventListener("input", function () {
+//Ecoute de la modification du nom
+formulaire.lastName.addEventListener("input", function () {
     nomValide(this);
-  });
+});
   
-  const nomValide = function (inputNom) {
+const nomValide = function (inputNom) {
     let nomRegex = new RegExp("^[-'a-zA-ZÀ-ÖØ-öø-ÿ\s_ ]{2,}$", "g");
     let testNom = nomRegex.test(inputNom.value);
-    if(testNom) {
+     if(testNom) {
       inputNom.nextElementSibling.innerHTML = "";
       return true;
     }
@@ -155,35 +158,35 @@ const prenomValide = function (inputPrenom) {
       inputNom.nextElementSibling.innerHTML = "Nom non valide";
       return false;
     }
-   };
+  };
  
-
-    formulaire.address.addEventListener("input", function () {
-      adresseValide(this);
-    });
+//Ecoute de la modification de l'adresse
+formulaire.address.addEventListener("input", function () {
+    adresseValide(this);
+});
     
-    const adresseValide = function (inputAdresse) {
-      let adresseRegex = new RegExp("^[-'a-zA-Z0-9À-ÖØ-öø-ÿ\s_ ]{3,}$", "g");
-      let testAdresse = adresseRegex.test(inputAdresse.value);
+  const adresseValide = function (inputAdresse) {
+    let adresseRegex = new RegExp("^[-'a-zA-Z0-9À-ÖØ-öø-ÿ\s_ ]{3,}$", "g");
+    let testAdresse = adresseRegex.test(inputAdresse.value);
       if(testAdresse) {
         inputAdresse.nextElementSibling.innerHTML = "";
         return true;
-      }
-      else {
-        inputAdresse.nextElementSibling.innerHTML = "Adresse non valide";
-        return false;
-      }
-   };
+    }
+    else {
+      inputAdresse.nextElementSibling.innerHTML = "Adresse non valide";
+       return false;
+    }
+  };
  
-
-  formulaire.city.addEventListener("input", function () {
+//Ecoute de la modification de la ville
+formulaire.city.addEventListener("input", function () {
     villeValide(this);
-  });
+});
   
   const villeValide = function (inputVille) {
     let villeRegex = new RegExp("^[-'a-zA-ZÀ-ÖØ-öø-ÿ\s_ ]{3,}$", "g");
     let testVille = villeRegex.test(inputVille.value);
-    if(testVille) {
+     if(testVille) {
       inputVille.nextElementSibling.innerHTML = "";
       return true;
     }
@@ -191,30 +194,31 @@ const prenomValide = function (inputPrenom) {
       inputVille.nextElementSibling.innerHTML = "Ville non valide";
       return false;
     }
-   };
+  };
 
-
-  formulaire.email.addEventListener("input", function() {
+//Ecoute de la modification de l'email
+formulaire.email.addEventListener("input", function() {
     emailValide(this);
  });
 
  const emailValide = function (inputEmail) {
     let emailRegex = new RegExp("^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$", "g" );
     let testEmail = emailRegex.test(inputEmail.value);
-  if(testEmail) {
-    inputEmail.nextElementSibling.innerHTML ="";
-    return true;
-  }
-  else {
+     if(testEmail) {
+     inputEmail.nextElementSibling.innerHTML ="";
+     return true;
+   }
+   else {
     inputEmail.nextElementSibling.innerHTML = "Adresse email non valide";
    }
  };
  
-
+//Fonction pour finaliser la commande
 function validerCommande () {
    const boutonCommande = document.getElementById("order");
     boutonCommande.addEventListener("click", (event) => {
       event.preventDefault();
+//Si le formulaire ne comporte aucune erreur
       if(
         prenomValide(formulaire.firstName) &&
         nomValide(formulaire.lastName) &&
@@ -222,44 +226,42 @@ function validerCommande () {
         villeValide(formulaire.city) &&
         emailValide(formulaire.email)
       ) {
-     
-      const produits = [];
-        for(let i = 0; i < ajoutProduitStorage.length; i++) {
-          produits.push(ajoutProduitStorage[i].id);
+//Création d'un tableau de produits
+    const produits = [];
+      for(let i = 0; i < ajoutProduitStorage.length; i++) {
+        produits.push(ajoutProduitStorage[i].id);
       }
-      
-      const objetContact = {
-          contact: {
-           firstName :formulaire.firstName.value,
-           lastName :formulaire.lastName.value,
-           address :formulaire.address.value,
-           city :formulaire.city.value,
-           email :formulaire.email.value
+//Création d'un objet contact à partir des données du formulaire
+    const objetContact = {
+      contact: {
+        firstName :formulaire.firstName.value,
+        lastName :formulaire.lastName.value,
+        address :formulaire.address.value,
+        city :formulaire.city.value,
+        email :formulaire.email.value
        },
-           products: produits
-      };
-             
-      const post = {
-           method: "POST",
-           body: JSON.stringify(objetContact),
-           headers : {
-             "Content-Type": "application/json"
-           },
-      };
-    
- fetch("http://localhost:3000/api/products/order", post) 
+        products: produits
+    };
+//Requete POST pour envoyer les données à l'API et récupérer l'identifiant de commande
+   const post = {
+    method: "POST",
+    body: JSON.stringify(objetContact),
+    headers : {
+      "Content-Type": "application/json"
+    },
+  };
+fetch("http://localhost:3000/api/products/order", post) 
   .then(response => response.json())
   .then(data => {
     localStorage.clear();
     localStorage.setItem("orderId", data.orderId);
     document.location.href = "./confirmation.html?id=" + data.orderId;
-  
-})     
-.catch(erreur => alert("Une erreur est survenue"));
-  
-  } else {
-   alert("Le formulaire comporte des erreurs");
+  })     
+  .catch(erreur => alert("Une erreur est survenue"));
  }
-});
+  else {
+    alert("Le formulaire comporte des erreurs");
+  }
+ });
 }
 validerCommande();
